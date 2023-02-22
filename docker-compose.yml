@@ -9,19 +9,19 @@ services:
     volumes:
      - ./:/var/www/html
     links:
-     - mysql
+     - db
 
-  mysql:
+  db:
     container_name: eget_test_db
-    image: mysql:5.7
+    image: postgres
     ports:
-      - "33060:3306"
+      - "54322:5432"
     volumes:
-      - dbdata:/var/lib/mysql
+      - dbdata:/var/lib/db
     environment:
-     - MYSQL_PASSWORD=root
-     - MYSQL_ROOT_PASSWORD=root
-     - MYSQL_DATABASE=eget_test
+     - POSTGRES_PASSWORD=root
+     - POSTGRES_USER=root
+     - POSTGRES_DB=eget_test
 
 volumes:
   dbdata:
