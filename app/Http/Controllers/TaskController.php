@@ -23,24 +23,6 @@ class TaskController extends Controller
         $this->user = JWTAuth::parseToken()->authenticate();
     }
 
-    public function getOne(int $taskId)
-    {
-        $task = Tasks::where('id', $taskId)
-            ->first();
-
-        $response = [
-            'success' => true,
-            'message' => 'No task found with matching id'
-        ];
-
-        if ($task) {
-            unset($response['message']);
-            $response['data'] = $task;
-        }
-
-        return response()->json($response, ($task) ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
-    }
-
     public function select(Request $request)
     {
         $filters = [];
@@ -65,7 +47,7 @@ class TaskController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()], 400);
         }
 
         if (empty($filters)) {
@@ -113,7 +95,7 @@ class TaskController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()], 400);
         }
 
         $task = Tasks::create([
@@ -148,7 +130,7 @@ class TaskController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()], 400);
         }
 
         $columns = [];
