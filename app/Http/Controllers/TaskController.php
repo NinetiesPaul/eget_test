@@ -56,7 +56,7 @@ class TaskController extends Controller
             $queryFilters = [];
 
             if (!empty($filters["status"])){
-                $queryFilters[] = ["current_status", $filters["status"]];
+                $queryFilters[] = ["current_status", strtolower($filters["status"])];
             }
 
             if (!empty($filters["owner"])){
