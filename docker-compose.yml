@@ -10,6 +10,7 @@ services:
      - ./:/var/www/html
     links:
      - db
+     - db_testing
 
   db:
     container_name: eget_test_db
@@ -17,11 +18,24 @@ services:
     ports:
       - "54322:5432"
     volumes:
-      - dbdata:/var/lib/db
+      - eget_test_pgsql_vol:/var/lib/postgresql/data
     environment:
      - POSTGRES_PASSWORD=root
      - POSTGRES_USER=root
      - POSTGRES_DB=eget_test
 
+  db_testing:
+    container_name: eget_test_db_phpunit
+    image: postgres
+    ports:
+      - "54323:5432"
+    volumes:
+      - eget_test_pgsql_testing_vol:/var/lib/postgresql/data
+    environment:
+     - POSTGRES_PASSWORD=root
+     - POSTGRES_USER=root
+     - POSTGRES_DB=eget_test_phpunit
+
 volumes:
-  dbdata:
+  eget_test_pgsql_vol:
+  eget_test_pgsql_testing_vol:
