@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('register', [ ApiController::class, 'register' ]);
+Route::post('login', [ ApiController::class, 'login' ]);
 
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
- 
-    return ['token' => $token->plainTextToken];
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('/tasks', [ TaskController::class, 'select' ]);
+    Route::post('/task', [ TaskController::class, 'create' ]);
+    Route::put('/task/{taskId}', [ TaskController::class, 'update' ]);
+    Route::delete('/task/{taskId}', [ TaskController::class, 'delete' ]);
 });
