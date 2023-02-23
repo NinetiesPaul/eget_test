@@ -1,6 +1,6 @@
 # eGet PHP Test
 
-_This is an exercise to evaluate my level of knowledge in PHP's Laravel framework.
+_This is an exercise to evaluate my level of knowledge in PHP's Laravel framework._
 
 This is a simple API REST application with the following features:
 - **User registering and logging**
